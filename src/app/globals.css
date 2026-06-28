@@ -848,3 +848,260 @@
     background: var(--flare);
   }
 }
+
+/* ----------------------------------------------------------------------------
+   16 · THE SECTION  (§2 / §7.5.2 / §8.5 — the signature artifact)
+   Seven horizontal strata, divided by hairline seams, each welded to a 2-digit
+   mono index, all pierced once by a single vertical core (the only saturated
+   flare in the drawing) on the 5/12 column line. Density-aware via [data-density]
+   so the same cut serves the airy editorial rack and the dense control rack.
+   Entry motion is JS-orchestrated (Framer, the-section.tsx); this file owns the
+   static drawing + the hover seam. The transform-origins below are what the
+   §8.6a beats animate against.
+   -------------------------------------------------------------------------- */
+@layer components {
+  .the-section {
+    position: relative;
+  }
+
+  /* the live datum the strata hang from (beat 1 draws this scaleX 0→1) */
+  .the-section-datum {
+    width: 100%;
+    height: 1px;
+    background: var(--datum);
+    transform-origin: left center;
+  }
+
+  /* the hero-only dusk band, seated above the datum (beat 5 blooms it open) */
+  .the-section-dusk {
+    transform-origin: top center;
+    margin-bottom: var(--s-8);
+  }
+
+  .the-section-strata {
+    position: relative;
+  }
+
+  /* one stratum = one layer of the cut. Strata abut; radius 0; the seam divides.
+     The whole row is the link to the function's detail page (§8.5). */
+  .stratum {
+    position: relative;
+    display: block;
+    height: 140px; /* §2 — ~140px editorial */
+    color: inherit;
+    text-decoration: none;
+    outline: none;
+  }
+  /* the core sits on the 5/12 line; the row splits there into the lead (what the
+     layer IS) and the figure (the work drawn in section). The split lands the
+     core exactly on the column boundary — the spine of the drawing. */
+  .stratum-content {
+    display: grid;
+    grid-template-columns: 41.667% 1fr; /* 5/12 */
+    align-items: center;
+    height: 100%;
+  }
+  .stratum-lead {
+    display: flex;
+    align-items: center;
+    gap: var(--s-24);
+    min-width: 0;
+    padding-right: var(--s-32); /* clears the core */
+  }
+  .stratum-figure {
+    display: flex;
+    align-items: center;
+    gap: var(--s-24);
+    min-width: 0;
+    padding-left: var(--s-32); /* clears the core */
+  }
+
+  /* col 1 — the index, welded to the left margin, baseline tabular mono */
+  .stratum-index {
+    flex: 0 0 auto;
+    width: 2.75rem;
+    color: var(--text-tertiary);
+    transition: color var(--dur-fast) var(--ease-micro);
+  }
+
+  /* name over claim (§7.5.2 anatomy) in the editorial rack; they go inline in the
+     dense control rack below. The column gives the claim its full lead width. */
+  .stratum-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.125rem; /* 2px */
+    min-width: 0;
+  }
+
+  /* the function name — h4 grotesque, sentence case (the index carries the caps
+     so the row never shouts — §8.5) */
+  .stratum-name {
+    color: var(--text-primary);
+    font-family: var(--grotesk);
+    font-weight: 500;
+    font-size: 1.3125rem; /* 21px h4 */
+    line-height: 1.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  /* the one-line claim — body-sm, verb-first, secondary ink */
+  .stratum-claim {
+    min-width: 0;
+    color: var(--text-secondary);
+    font-family: var(--grotesk);
+    font-weight: 400;
+    font-size: 0.9375rem; /* 15px body-sm */
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* cols 8–12 — the function's work drawn in section (§2.4), pushed to the right
+     edge so it sits past the core. Hairline, tertiary, no flare. */
+  /* the drawn artifact — anchored just right of the core (col 8), given real
+     presence so the figure balances the lead. Hairline, tertiary, no flare. */
+  .stratum-artifact {
+    flex: 0 0 auto;
+    width: 168px;
+    height: 52px;
+    color: var(--text-tertiary);
+    opacity: 0.9;
+    transition:
+      color var(--dur-base) var(--ease-line),
+      opacity var(--dur-base) var(--ease-line);
+  }
+  .stratum-artifact svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* the `┊→` affordance — pinned to the far right of the row */
+  .stratum-chevron {
+    flex: 0 0 auto;
+    margin-left: auto;
+    width: 22px;
+    color: var(--text-tertiary);
+    transition: color var(--dur-fast) var(--ease-micro);
+  }
+
+  /* the per-stratum divider — first hangs from the datum, last closes the rack.
+     Drawn on entry (scaleX 0→1, beat 2); thickens to flare on hover. */
+  .stratum-seam {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 1px;
+    background: var(--border);
+    transform-origin: left center;
+    pointer-events: none;
+  }
+
+  /* THE CORE — one vertical flare line on the 5/12 column line, drawn once for
+     the whole rack (beat 4, scaleY 0→1 from the datum). The sixth sanctioned
+     flare use; individual strata never get their own. */
+  .rack-core {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 41.667%; /* 5/12 */
+    width: 1.5px;
+    background: var(--flare);
+    transform-origin: top center;
+    pointer-events: none;
+  }
+
+  /* hover/focus (§7.5.2): the hovered stratum's own seam bleeds to flare, the
+     index brightens tertiary→secondary, the artifact gains life. No lift, no
+     shadow, no colour flood, and the row never moves. */
+  .stratum:hover .stratum-seam,
+  .stratum:focus-visible .stratum-seam {
+    background: var(--flare);
+  }
+  .stratum:hover .stratum-index,
+  .stratum:focus-visible .stratum-index,
+  .stratum:hover .stratum-chevron,
+  .stratum:focus-visible .stratum-chevron {
+    color: var(--text-secondary);
+  }
+  .stratum:hover .stratum-artifact,
+  .stratum:focus-visible .stratum-artifact {
+    color: var(--text-secondary);
+    opacity: 1;
+  }
+  .stratum:focus-visible {
+    outline: 1px solid var(--focus-ring);
+    outline-offset: -1px;
+  }
+
+  /* —— the dense control-panel rack — the instrument jolt (§6 / §8.5) —— */
+  [data-density="control"] .stratum {
+    height: 56px;
+  }
+  [data-density="control"] .stratum-lead {
+    gap: var(--s-16);
+    padding-right: var(--s-24);
+  }
+  [data-density="control"] .stratum-figure {
+    gap: var(--s-16);
+    padding-left: var(--s-24);
+  }
+  [data-density="control"] .stratum-index {
+    width: 2.25rem;
+  }
+  /* the dense rack runs name + claim inline as mono labels (the instrument) */
+  [data-density="control"] .stratum-text {
+    flex-direction: row;
+    align-items: baseline;
+    gap: var(--s-16);
+  }
+  [data-density="control"] .stratum-name {
+    flex: 0 0 auto;
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 0.8125rem; /* 13px mono label */
+    line-height: 1rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  [data-density="control"] .stratum-claim {
+    font-family: var(--mono);
+    font-size: 0.8125rem;
+    line-height: 1rem;
+    color: var(--text-tertiary);
+    white-space: nowrap;
+  }
+  [data-density="control"] .stratum-artifact {
+    width: 116px;
+    height: 30px;
+  }
+
+  /* —— mobile: keep index + name + core legible; the claim/artifact step back —— */
+  @media (max-width: 47.99rem) {
+    .stratum {
+      height: 96px;
+    }
+    .stratum-content {
+      grid-template-columns: 1fr auto; /* name takes the row; chevron hugs right */
+    }
+    .stratum-lead,
+    [data-density="control"] .stratum-lead {
+      padding-right: var(--s-16);
+    }
+    .stratum-figure,
+    [data-density="control"] .stratum-figure {
+      padding-left: 0;
+    }
+    .stratum-claim,
+    .stratum-artifact {
+      display: none;
+    }
+    .rack-core {
+      left: 38%;
+    }
+    [data-density="control"] .stratum {
+      height: 48px;
+    }
+  }
+}
