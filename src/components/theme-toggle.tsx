@@ -29,7 +29,7 @@ export function ThemeToggle() {
       type="button"
       onClick={toggle}
       aria-label="Toggle day / night"
-      className="theme-toggle grid size-[34px] place-items-center rounded-control border border-line text-ink-muted transition-colors duration-200 ease-scribe hover:border-ink-faint hover:text-ink"
+      className="theme-toggle grid size-[34px] place-items-center rounded-control border border-line text-ink-muted transition-colors duration-150 ease-micro hover:border-ink-faint hover:text-ink"
     >
       {/* sun — shown in dark mode (tap to go light) */}
       <svg

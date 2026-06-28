@@ -36,9 +36,13 @@
   --container-wide: 90rem; /* 1440px — control-panel "rack" */
   --container-bleed: 100vw; /* the datum, the dusk band, full-bleed strata */
 
-  /* motion — the Scribe ease family (§8.1) */
-  --ease-scribe: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-scribe-out: cubic-bezier(0.22, 1, 0.36, 1);
+  /* motion — the Scribe ease family (§8.1). The only easings allowed.
+     --ease-line is primary (draw-ins, reveals, the seam wipe, the core). */
+  --ease-line: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft: cubic-bezier(0.33, 1, 0.68, 1); /* gentle fades, tint changes */
+  --ease-move: cubic-bezier(0.65, 0, 0.35, 1); /* travel between states; drift */
+  --ease-exit: cubic-bezier(0.55, 0, 1, 0.45); /* elements leaving / dismissals */
+  --ease-micro: cubic-bezier(0.4, 0, 0.2, 1); /* hover & press < 200ms only */
 
   /* the one permitted elevation shadow (§4) — neutral, used once */
   --shadow-elevation: 0 20px 40px rgba(13, 16, 20, 0.16);
@@ -104,6 +108,17 @@
   --w-wide: 1440px;
   --w-bleed: 100vw;
 
+  /* duration ladder (§8.2) — a fixed ladder, nothing in between; scales with
+     distance/area travelled, never importance. Finger-triggered ≤ --dur-base. */
+  --dur-instant: 80ms; /* press / active flip */
+  --dur-fast: 120ms; /* hover tint, focus ring (--ease-micro) */
+  --dur-base: 220ms; /* the seam wipe (locked); standard control transitions */
+  --dur-mod: 320ms; /* popovers, tooltips, tabs */
+  --dur-slow: 480ms; /* drawers, modals, large panels */
+  --dur-reveal: 640ms; /* per-element scroll reveal */
+  --dur-draw: 720ms; /* a single seam / the datum drawing the width */
+  --dur-ambient: 20000ms; /* the dusk-band hue drift — the only 20s loop */
+
   /* —— dark "blue hour" palette (§4) —— */
   --bg: #0d1014;
   --horizon-floor: #161310;
@@ -130,7 +145,7 @@
     180deg,
     #0d1014 0%,
     #1b2a38 48%,
-    rgba(251, 77, 28, 0.16) 84%,
+    rgba(251, 77, 28, 0.14) 84%,
     var(--horizon-floor) 100%
   );
   --grid-line: rgba(255, 255, 255, 0.05);
@@ -167,9 +182,8 @@
 
   --dusk: linear-gradient(
     180deg,
-    #c7cdd2 0%,
-    #aeb9c2 40%,
-    rgba(251, 77, 28, 0.14) 82%,
+    #1b2a38 0%,
+    rgba(251, 77, 28, 0.14) 70%,
     var(--bg) 100%
   );
   --grid-line: rgba(21, 20, 15, 0.05);
@@ -198,13 +212,13 @@
     line-height: 1.65;
     letter-spacing: -0.003em;
     transition:
-      background 0.6s var(--ease-scribe),
-      color 0.6s var(--ease-scribe);
+      background 0.6s var(--ease-line),
+      color 0.6s var(--ease-line);
   }
 
   ::selection {
     background: var(--flare);
-    color: #fff;
+    color: var(--text-primary);
   }
 
   /* focus ring — 2px flare(-hover), 2px offset (§4) */
@@ -397,41 +411,42 @@
    8 · GRAPHIC DEVICES  (grain + the one gradient)
    -------------------------------------------------------------------------- */
 @layer components {
-  /* film grain — kills banding, adds a printed texture (§8.5). Site-wide. */
+  /* film grain — one shared 128px monochrome tile, ≤2.5%, rides on blend mode
+     (§8.5). Kills banding on the dusk band + a faint instrument tooth. Site-wide.
+     overlay on dark, multiply on light. Never animated, never over body text. */
   .grain {
     position: fixed;
     inset: 0;
     pointer-events: none;
     z-index: 9999;
-    opacity: 0.04;
+    opacity: 0.025;
     mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
-  /* the dusk band — the one gradient, once per page, seated on the datum */
+  /* the dusk band — the one gradient, once per page, a 96px band of light seated
+     on the section datum (§8.6). Linear horizon, never an orb. The shared grain
+     above rides over it to kill banding (no second, stronger grain layer). */
   .dusk-band {
     position: relative;
     width: 100%;
-    height: 132px;
+    height: 96px;
     background: var(--dusk);
-    animation: dusk-drift 22s ease-in-out infinite alternate;
-  }
-  .dusk-band::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    opacity: 0.5;
-    mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    animation: dusk-drift var(--dur-ambient) linear infinite alternate;
   }
 }
 
+[data-theme="light"] .grain {
+  mix-blend-mode: multiply;
+}
+
+/* ±2% atmospheric hue drift — the only permitted linear loop (§8.1 / §8.6) */
 @keyframes dusk-drift {
   from {
-    filter: hue-rotate(-3deg);
+    filter: hue-rotate(-2deg);
   }
   to {
-    filter: hue-rotate(3deg);
+    filter: hue-rotate(2deg);
   }
 }
 

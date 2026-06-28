@@ -94,15 +94,32 @@ const TYPE_STEPS: TypeStep[] = [
 
 const SPACE_SCALE = [4, 8, 16, 24, 32, 48, 64, 96, 128, 192, 256];
 
+// The Scribe family — the only easings allowed (§8.1).
 const EASES = [
-  { name: "ease-scribe", value: "cubic-bezier(0.16, 1, 0.3, 1)", role: "The house ease — every hover, every seam-in" },
-  { name: "ease-scribe-out", value: "cubic-bezier(0.22, 1, 0.36, 1)", role: "Scroll-reveal / fade-up variant" },
+  { name: "ease-line", value: "cubic-bezier(0.16, 1, 0.3, 1)", role: "PRIMARY — draw-ins, reveals, the seam wipe, the core" },
+  { name: "ease-soft", value: "cubic-bezier(0.33, 1, 0.68, 1)", role: "Gentle fades, tint changes" },
+  { name: "ease-move", value: "cubic-bezier(0.65, 0, 0.35, 1)", role: "Travel between states · the dusk drift" },
+  { name: "ease-exit", value: "cubic-bezier(0.55, 0, 1, 0.45)", role: "Elements leaving · dismissals" },
+  { name: "ease-micro", value: "cubic-bezier(0.4, 0, 0.2, 1)", role: "Hover & press feedback < 200ms" },
+];
+
+// The duration ladder (§8.2) — finger-triggered resolves ≤ base.
+const DURATIONS = [
+  { name: "instant", ms: 80, role: "press / active flip" },
+  { name: "fast", ms: 120, role: "hover tint, focus ring" },
+  { name: "base", ms: 220, role: "the seam wipe · standard controls" },
+  { name: "mod", ms: 320, role: "popovers, tooltips, tabs" },
+  { name: "slow", ms: 480, role: "drawers, modals" },
+  { name: "reveal", ms: 640, role: "per-element scroll reveal" },
+  { name: "draw", ms: 720, role: "a seam / the datum drawing" },
+  { name: "ambient", ms: 20000, role: "the dusk-band hue drift" },
 ];
 
 const CONTAINERS = [
   { name: "w-prose", px: 680, role: "Reading measure (~66ch)" },
   { name: "w-content", px: 1200, role: "Default editorial frame" },
   { name: "w-wide", px: 1440, role: "Control-panel rack" },
+  { name: "w-bleed", px: null, role: "Full-bleed — datum, dusk band, strata (100vw)" },
 ];
 
 function Sidehead({ index, label }: { index: string; label: string }) {
@@ -273,20 +290,44 @@ export default function TokensPage() {
       </Section>
 
       {/* —— MOTION —— */}
-      <Section index="05" label="Motion · one ease family">
-        <div className="flex flex-col gap-8">
-          {EASES.map((ease) => (
-            <div key={ease.name} className="flex flex-col gap-2">
-              <span className="mono text-[13px] text-ink">{ease.name}</span>
-              <span className="mono text-[11px] text-ink-faint">
-                {ease.value}
-              </span>
-              <span className="body-sm text-ink-muted">{ease.role}</span>
+      <Section index="05" label="Motion · the Scribe family">
+        <div className="flex flex-col gap-10">
+          <div className="flex flex-col gap-6">
+            {EASES.map((e) => (
+              <div key={e.name} className="flex flex-col gap-1">
+                <div className="flex items-baseline justify-between gap-6">
+                  <span className="mono text-[13px] text-ink">{e.name}</span>
+                  <span className="mono text-[11px] text-ink-faint">
+                    {e.value}
+                  </span>
+                </div>
+                <span className="body-sm text-ink-muted">{e.role}</span>
+              </div>
+            ))}
+          </div>
+
+          <div>
+            <p className="eyebrow mb-5">Duration ladder</p>
+            <div className="flex flex-col divide-y divide-line">
+              {DURATIONS.map((d) => (
+                <div
+                  key={d.name}
+                  className="flex items-baseline justify-between gap-6 py-2.5"
+                >
+                  <span className="mono text-[13px] text-ink">{d.name}</span>
+                  <span className="body-sm text-ink-muted">{d.role}</span>
+                  <span className="mono tnum w-16 shrink-0 text-right text-[12px] text-ink-faint">
+                    {d.ms}ms
+                  </span>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
+
           <p className="caption max-w-[60ch] text-ink-faint">
-            All motion collapses to ≤0.001ms under prefers-reduced-motion — the
-            dusk band stops drifting, every seam-in resolves to its end state.
+            One family, one sensibility: decisive entry attenuating to a precise,
+            dead-stop settle — no overshoot. All motion collapses under
+            prefers-reduced-motion; the dusk band stops drifting.
           </p>
         </div>
       </Section>
@@ -296,18 +337,21 @@ export default function TokensPage() {
         <div className="flex flex-col gap-6">
           {CONTAINERS.map((c) => (
             <div key={c.name} className="flex flex-col gap-2">
-              <div className="flex items-baseline justify-between">
+              <div className="flex items-baseline justify-between gap-6">
                 <span className="mono text-[13px] text-ink">{c.name}</span>
                 <span className="mono text-[11px] text-ink-faint">
-                  {c.px}px · {c.role}
+                  {c.px ? `${c.px}px` : "100vw"} · {c.role}
                 </span>
               </div>
-              <div className="datum" style={{ maxWidth: `${c.px / 2}px` }} />
+              <div
+                className="datum"
+                style={{ maxWidth: c.px ? `${c.px / 2}px` : "100%" }}
+              />
             </div>
           ))}
           <p className="caption text-ink-faint">
-            Rules shown at half scale. The fifth is w-bleed (100vw) — the datum,
-            the dusk band, full-bleed strata.
+            Editorial frames shown at half scale; w-bleed is the full width —
+            the datum, the dusk band, full-bleed strata.
           </p>
         </div>
       </Section>
