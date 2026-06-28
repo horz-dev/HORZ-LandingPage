@@ -108,7 +108,7 @@ const CONTAINERS = [
 function Sidehead({ index, label }: { index: string; label: string }) {
   return (
     <div className="flex items-baseline gap-3 md:flex-col md:gap-2">
-      <span className="index text-flare">{index}</span>
+      <span className="index text-ink-faint">{index}</span>
       <span className="eyebrow">{label}</span>
     </div>
   );
@@ -248,7 +248,7 @@ export default function TokensPage() {
                 {unit}
               </span>
               <div
-                className="h-4 bg-flare/80"
+                className="h-4 bg-ink-muted"
                 style={{ width: `${unit}px` }}
               />
             </div>

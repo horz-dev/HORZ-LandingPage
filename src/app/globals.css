@@ -34,6 +34,7 @@
   --container-prose: 42.5rem; /* 680px — reading measure ~66ch */
   --container-content: 75rem; /* 1200px — default editorial frame */
   --container-wide: 90rem; /* 1440px — control-panel "rack" */
+  --container-bleed: 100vw; /* the datum, the dusk band, full-bleed strata */
 
   /* motion — the Scribe ease family (§8.1) */
   --ease-scribe: cubic-bezier(0.16, 1, 0.3, 1);
@@ -101,6 +102,7 @@
   --w-prose: 680px;
   --w-content: 1200px;
   --w-wide: 1440px;
+  --w-bleed: 100vw;
 
   /* —— dark "blue hour" palette (§4) —— */
   --bg: #0d1014;

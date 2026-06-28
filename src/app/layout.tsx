@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { fontVariables } from "./fonts";
-import { DEFAULT_THEME, themeInitScript } from "@/lib/theme";
+import { DEFAULT_THEME, SURFACE_COLOR, themeInitScript } from "@/lib/theme";
 
 export const metadata: Metadata = {
   title: {
@@ -13,10 +13,9 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#0D1014" },
-    { media: "(prefers-color-scheme: light)", color: "#ECEAE4" },
-  ],
+  // static = the default surface (dark "blue hour"); the init script + toggle
+  // keep the meta in sync with the real data-theme, not the OS preference.
+  themeColor: SURFACE_COLOR[DEFAULT_THEME],
 };
 
 export default function RootLayout({

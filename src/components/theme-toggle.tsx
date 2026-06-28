@@ -1,6 +1,6 @@
 "use client";
 
-import { THEME_STORAGE_KEY, type Theme } from "@/lib/theme";
+import { SURFACE_COLOR, THEME_STORAGE_KEY, type Theme } from "@/lib/theme";
 
 /**
  * Day / night switch. The icon shown is chosen purely by CSS from the
@@ -14,6 +14,9 @@ export function ThemeToggle() {
     const current = (root.getAttribute("data-theme") as Theme) ?? "dark";
     const next: Theme = current === "dark" ? "light" : "dark";
     root.setAttribute("data-theme", next);
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute("content", SURFACE_COLOR[next]);
     try {
       localStorage.setItem(THEME_STORAGE_KEY, next);
     } catch {
