@@ -1,0 +1,461 @@
+@import "tailwindcss";
+
+/* ============================================================================
+   horz — design tokens
+   One night. One fog. One flare. Two voices. One section.
+
+   Source of truth: ../design/DESIGN_SYSTEM.md (§4 color, §5 type, §6 spacing)
+   Pixel target:    ../design/preview/index.html (the locked static mock)
+
+   Architecture
+   - Semantic colour vars live on :root (dark "blue hour" = home) and are
+     overridden under [data-theme="light"] ("day station" fog).
+   - @theme inline maps those runtime vars into Tailwind utilities so the
+     utilities themselves switch with the theme (the whole point of `inline`).
+   - Structural constants (type stacks, spacing scale, widths) are NOT themed.
+   ========================================================================== */
+
+/* ----------------------------------------------------------------------------
+   1 · STATIC THEME TOKENS  (non-themed: feed Tailwind utilities + variants)
+   -------------------------------------------------------------------------- */
+@theme {
+  /* breakpoints — horz's five, exact (600 · 768 · 1024 · 1280 · 1440) */
+  --breakpoint-sm: 37.5rem; /* 600px */
+  --breakpoint-md: 48rem; /* 768px */
+  --breakpoint-lg: 64rem; /* 1024px */
+  --breakpoint-xl: 80rem; /* 1280px */
+  --breakpoint-2xl: 90rem; /* 1440px */
+
+  /* radius — 0 for structural strata, 2px for controls. Nothing is 6px. */
+  --radius-strata: 0px;
+  --radius-control: 2px;
+
+  /* container widths — four, no fifth (§6) */
+  --container-prose: 42.5rem; /* 680px — reading measure ~66ch */
+  --container-content: 75rem; /* 1200px — default editorial frame */
+  --container-wide: 90rem; /* 1440px — control-panel "rack" */
+
+  /* motion — the Scribe ease family (§8.1) */
+  --ease-scribe: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-scribe-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* the one permitted elevation shadow (§4) — neutral, used once */
+  --shadow-elevation: 0 20px 40px rgba(13, 16, 20, 0.16);
+}
+
+/* ----------------------------------------------------------------------------
+   2 · THEMED TOKENS → Tailwind utilities (inline = switches with [data-theme])
+   -------------------------------------------------------------------------- */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-horizon: var(--horizon-floor);
+  --color-surface: var(--surface);
+  --color-raised: var(--surface-raised);
+  --color-line: var(--border); /* hairline → border-line / bg-line */
+  --color-datum: var(--datum);
+
+  --color-ink: var(--text-primary);
+  --color-ink-muted: var(--text-secondary);
+  --color-ink-faint: var(--text-tertiary);
+
+  --color-flare: var(--flare);
+  --color-flare-link: var(--flare-link);
+  --color-flare-hover: var(--flare-hover);
+  --color-flare-muted: var(--flare-muted);
+
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+
+  --font-sans: var(--grotesk);
+  --font-grotesk: var(--grotesk);
+  --font-serif: var(--serif);
+  --font-mono: var(--mono);
+}
+
+/* ----------------------------------------------------------------------------
+   3 · STRUCTURAL CONSTANTS + DARK THEME ("blue hour" — the home surface)
+   :root carries the default (dark) palette so the night shows with zero JS.
+   -------------------------------------------------------------------------- */
+:root {
+  /* type stacks — next/font variables in front, licensed names, then fallback.
+     GT Sectra / ABC Diatype slot in front of the open fallbacks when licensed. */
+  --serif: var(--font-fraunces), "GT Sectra Display", Georgia, serif;
+  --grotesk: var(--font-schibsted), "ABC Diatype", system-ui, sans-serif;
+  --mono: var(--font-spline), "ABC Diatype Mono", ui-monospace, monospace;
+
+  /* spacing scale (px) — 4·8·16·24·32·48·64·96·128·192·256. Nothing outside. */
+  --s-4: 4px;
+  --s-8: 8px;
+  --s-16: 16px;
+  --s-24: 24px;
+  --s-32: 32px;
+  --s-48: 48px;
+  --s-64: 64px;
+  --s-96: 96px;
+  --s-128: 128px;
+  --s-192: 192px;
+  --s-256: 256px;
+
+  /* container widths (raw, for non-Tailwind contexts) */
+  --w-prose: 680px;
+  --w-content: 1200px;
+  --w-wide: 1440px;
+
+  /* —— dark "blue hour" palette (§4) —— */
+  --bg: #0d1014;
+  --horizon-floor: #161310;
+  --surface: #161b22;
+  --surface-raised: #1e242e;
+  --border: #283039;
+  --datum: rgba(255, 255, 255, 0.12);
+
+  --text-primary: #f2efe8;
+  --text-secondary: #a4aab5;
+  --text-tertiary: #697079;
+
+  --flare: #ff6f44;
+  --flare-link: #ff855f; /* dark: inline links share the hover tone (§4) */
+  --flare-hover: #ff855f;
+  --flare-muted: #33231a;
+
+  --success: #7fa06f;
+  --warning: #e0ae5a;
+  --danger: #d26a52;
+
+  /* the one gradient, once per page — the dusk band on the live datum */
+  --dusk: linear-gradient(
+    180deg,
+    #0d1014 0%,
+    #1b2a38 48%,
+    rgba(251, 77, 28, 0.16) 84%,
+    var(--horizon-floor) 100%
+  );
+  --grid-line: rgba(255, 255, 255, 0.05);
+
+  /* focus ring — dark uses flare-hover (§4) */
+  --focus-ring: var(--flare-hover);
+
+  color-scheme: dark;
+}
+
+/* ----------------------------------------------------------------------------
+   4 · LIGHT THEME ("day station" — secondary fog surface)
+   -------------------------------------------------------------------------- */
+[data-theme="light"] {
+  --bg: #eceae4; /* cool fog paper — never #fff */
+  --horizon-floor: #e4dfd3;
+  --surface: #f3f1eb;
+  --surface-raised: #f8f6f1;
+  --border: #dcd8cf;
+  --datum: rgba(21, 20, 15, 0.1);
+
+  --text-primary: #15140f; /* ink — never #000 */
+  --text-secondary: #66605a;
+  --text-tertiary: #97928a;
+
+  --flare: #fb4d1c; /* vermilion — large/CTA/core only */
+  --flare-link: #be3613; /* inline links — passes APCA on fog */
+  --flare-hover: #e23e12;
+  --flare-muted: #f1d9cd;
+
+  --success: #5f7856;
+  --warning: #b8861f;
+  --danger: #a82f22;
+
+  --dusk: linear-gradient(
+    180deg,
+    #c7cdd2 0%,
+    #aeb9c2 40%,
+    rgba(251, 77, 28, 0.14) 82%,
+    var(--bg) 100%
+  );
+  --grid-line: rgba(21, 20, 15, 0.05);
+
+  /* focus ring — light uses flare (§4) */
+  --focus-ring: var(--flare);
+
+  color-scheme: light;
+}
+
+/* ----------------------------------------------------------------------------
+   5 · BASE  (Preflight handles the reset; this is the brand layer)
+   -------------------------------------------------------------------------- */
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: var(--grotesk);
+    font-size: 1.0625rem; /* 17px — body token */
+    line-height: 1.65;
+    letter-spacing: -0.003em;
+    transition:
+      background 0.6s var(--ease-scribe),
+      color 0.6s var(--ease-scribe);
+  }
+
+  ::selection {
+    background: var(--flare);
+    color: #fff;
+  }
+
+  /* focus ring — 2px flare(-hover), 2px offset (§4) */
+  :focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  /* tabular figures wherever numerals are instrument data */
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* ----------------------------------------------------------------------------
+   6 · TYPE SCALE  (§5 modular scale — the two voices)
+   Display = serif, optical leading (unitless). Body/UI = grotesk, baseline-
+   snapped leading (rem) on the 4px grid. Grotesk weight tops out at 500.
+   -------------------------------------------------------------------------- */
+@layer components {
+  .serif {
+    font-family: var(--serif);
+    font-weight: 400;
+  }
+  .grotesk {
+    font-family: var(--grotesk);
+  }
+  .mono {
+    font-family: var(--mono);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .display-xl {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(3.25rem, 8vw, 6rem); /* 52 → 96px */
+    line-height: 1.04;
+    letter-spacing: -0.025em;
+  }
+  .display-l {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 4rem; /* 64px */
+    line-height: 1.06;
+    letter-spacing: -0.022em;
+  }
+  .display-m {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 2.75rem; /* 44px */
+    line-height: 1.09;
+    letter-spacing: -0.018em;
+  }
+
+  .h1 {
+    font-family: var(--grotesk);
+    font-weight: 500;
+    font-size: 2.75rem; /* 44px — product/UI H1 (grotesque) */
+    line-height: 3rem; /* 48px */
+    letter-spacing: -0.018em;
+  }
+  .h2 {
+    font-family: var(--grotesk);
+    font-weight: 500;
+    font-size: 2.125rem; /* 34px */
+    line-height: 2.5rem; /* 40px */
+    letter-spacing: -0.018em;
+  }
+  .h3 {
+    font-family: var(--grotesk);
+    font-weight: 500;
+    font-size: 1.625rem; /* 26px */
+    line-height: 2rem; /* 32px */
+    letter-spacing: -0.014em;
+  }
+  .h4 {
+    font-family: var(--grotesk);
+    font-weight: 500;
+    font-size: 1.3125rem; /* 21px */
+    line-height: 1.75rem; /* 28px */
+    letter-spacing: -0.01em;
+  }
+
+  .lead {
+    font-family: var(--grotesk);
+    font-weight: 400;
+    font-size: 1.25rem; /* 20px */
+    line-height: 2rem; /* 32px */
+    letter-spacing: -0.008em;
+  }
+  .body {
+    font-family: var(--grotesk);
+    font-weight: 400;
+    font-size: 1.0625rem; /* 17px */
+    line-height: 1.75rem; /* 28px */
+    letter-spacing: -0.003em;
+  }
+  .body-sm {
+    font-family: var(--grotesk);
+    font-weight: 400;
+    font-size: 0.9375rem; /* 15px */
+    line-height: 1.5rem; /* 24px */
+    letter-spacing: 0;
+  }
+  .ui-label {
+    font-family: var(--grotesk);
+    font-weight: 500;
+    font-size: 0.9375rem; /* 15px */
+    line-height: 1rem; /* 16px */
+    letter-spacing: 0.004em;
+  }
+  .caption {
+    font-family: var(--grotesk);
+    font-weight: 400;
+    font-size: 0.8125rem; /* 13px */
+    line-height: 1.25rem; /* 20px */
+    letter-spacing: 0;
+  }
+
+  /* the single all-caps style — section eyebrows + module labels */
+  .eyebrow {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 0.75rem; /* 12px */
+    line-height: 1rem; /* 16px */
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+  .eyebrow .dot {
+    color: var(--flare);
+  }
+
+  /* strata indices, metrics, the survey-coordinate motif */
+  .index {
+    font-family: var(--mono);
+    font-weight: 400;
+    font-size: 0.8125rem; /* 13px */
+    line-height: 1rem; /* 16px */
+    letter-spacing: 0.04em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* colour helpers */
+  .muted {
+    color: var(--text-secondary);
+  }
+  .faint {
+    color: var(--text-tertiary);
+  }
+}
+
+/* ----------------------------------------------------------------------------
+   7 · LAYOUT PRIMITIVES  (the frame + the datum)
+   -------------------------------------------------------------------------- */
+@layer components {
+  /* the editorial frame — content width + the §6 responsive outer margins */
+  .frame {
+    width: 100%;
+    max-width: var(--w-content);
+    margin-inline: auto;
+    padding-inline: var(--s-24); /* 24px <768 */
+  }
+  @media (min-width: 48rem) {
+    .frame {
+      padding-inline: var(--s-48); /* 48px ≥768 */
+    }
+  }
+  @media (min-width: 80rem) {
+    .frame {
+      padding-inline: 80px; /* 80px ≥1280 */
+    }
+  }
+  .frame-wide {
+    max-width: var(--w-wide);
+  }
+  .frame-prose {
+    max-width: var(--w-prose);
+  }
+
+  /* the structural section line — 1px, full-bleed, same logic sitewide */
+  .datum {
+    width: 100%;
+    height: 1px;
+    background: var(--datum);
+  }
+}
+
+/* ----------------------------------------------------------------------------
+   8 · GRAPHIC DEVICES  (grain + the one gradient)
+   -------------------------------------------------------------------------- */
+@layer components {
+  /* film grain — kills banding, adds a printed texture (§8.5). Site-wide. */
+  .grain {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.04;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* the dusk band — the one gradient, once per page, seated on the datum */
+  .dusk-band {
+    position: relative;
+    width: 100%;
+    height: 132px;
+    background: var(--dusk);
+    animation: dusk-drift 22s ease-in-out infinite alternate;
+  }
+  .dusk-band::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0.5;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+}
+
+@keyframes dusk-drift {
+  from {
+    filter: hue-rotate(-3deg);
+  }
+  to {
+    filter: hue-rotate(3deg);
+  }
+}
+
+/* ----------------------------------------------------------------------------
+   9 · CONTROLS  (theme-toggle icon swap, driven by html[data-theme])
+   -------------------------------------------------------------------------- */
+[data-theme="dark"] .theme-toggle .icon-moon {
+  display: none;
+}
+[data-theme="light"] .theme-toggle .icon-sun {
+  display: none;
+}
+
+/* ----------------------------------------------------------------------------
+   10 · REDUCED MOTION  (specified, not retrofitted — §8.10)
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .dusk-band {
+    animation: none;
+  }
+}
