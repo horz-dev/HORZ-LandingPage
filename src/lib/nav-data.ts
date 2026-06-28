@@ -2,10 +2,11 @@
  * Nav / footer / system strings — verbatim from `content/02-global-nav-footer-seo.md`
  * (the single source of truth for chrome copy). Nothing here is improvised.
  *
- * `soon: true` follows the §2 build note exactly — only these destinations render
- * disabled with a `soon` tag until their content ships: Roadmap, Careers, Contact,
- * Brand kit, Survey Log, Field Notes, Security & Trust. Every other link carries
- * its real href and resolves as later phases land its page.
+ * `soon: true` follows the §2 build note — these destinations render disabled with
+ * a `soon` tag until their content ships: Roadmap, Careers, Contact, Brand kit,
+ * Survey Log, Field Notes. (Security & Trust shipped in Phase 5a, so it now carries
+ * a real href.) Every other link carries its real href and resolves as later phases
+ * land its page.
  */
 
 export type NavLink = {
@@ -82,7 +83,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
       { label: "Field Notes", href: "/field-notes", soon: true }, // the engineering blog
       { label: "Changelog", href: "/changelog" },
       { label: "Status", href: "/status" },
-      { label: "Security & Trust", href: "/security", soon: true }, // SOC 2, controls, audit trail
+      { label: "Security & Trust", href: "/security" }, // SOC 2, controls, audit trail
     ],
   },
   {
