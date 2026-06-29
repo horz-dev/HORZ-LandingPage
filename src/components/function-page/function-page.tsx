@@ -28,7 +28,7 @@ export function FunctionPageView({ fn }: { fn: FunctionPage }) {
   return (
     <>
       <SiteNav heroOverlay />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <FunctionHero fn={fn} />
         <WorkInSection fn={fn} />
         <Pipeline fn={fn} />
@@ -49,7 +49,7 @@ export function FunctionPageView({ fn }: { fn: FunctionPage }) {
 /* ── The work, in section — the artifact descent (editorial) ─────────────── */
 function WorkInSection({ fn }: { fn: FunctionPage }) {
   return (
-    <Section index={fn.index} label="The work, in section">
+    <Section index={fn.index} label="The work, in section" labelAs="h2">
       {fn.work.intro ? (
         <Reveal>
           <p className="body mb-10 max-w-[68ch] text-ink-muted">{fn.work.intro}</p>

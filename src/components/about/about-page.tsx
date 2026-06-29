@@ -24,7 +24,7 @@ export function AboutPage() {
   return (
     <>
       <SiteNav heroOverlay />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <AboutHero />
         <ManifestoBody />
         <ArchitectureThesis />

@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { ElementType, ReactNode } from "react";
 import { Container } from "./container";
 import { Datum } from "./datum";
 import { Eyebrow } from "./eyebrow";
@@ -13,6 +13,7 @@ import { Eyebrow } from "./eyebrow";
 export function Section({
   index,
   label,
+  labelAs = "span",
   description,
   width = "content",
   topDatum = true,
@@ -22,6 +23,9 @@ export function Section({
 }: {
   index?: string;
   label?: string;
+  /** render the sidehead as a heading (e.g. "h2") when the section owns one in
+   *  the document outline; defaults to a non-heading span. */
+  labelAs?: ElementType;
   description?: ReactNode;
   width?: "prose" | "content" | "wide";
   topDatum?: boolean;
@@ -37,7 +41,7 @@ export function Section({
           {(label || index) && (
             <div className="mb-8 md:mb-0">
               <div className="md:sticky md:top-24">
-                {label ? <Eyebrow index={index}>{label}</Eyebrow> : null}
+                {label ? <Eyebrow as={labelAs} index={index}>{label}</Eyebrow> : null}
                 {description ? (
                   <p className="caption mt-3 max-w-[24ch] text-ink-faint">
                     {description}

@@ -66,15 +66,17 @@ export function ThemeToggleLabeled() {
     <button
       type="button"
       onClick={toggleTheme}
-      aria-label="Switch surface — Night (blue hour) or Day (day station)"
+      // no aria-label: the accessible name is exactly the visible "Night / Day"
+      // text, so name === visible label (WCAG 2.5.3); the title carries the gloss.
+      title="Switch surface — Night (blue hour) or Day (day station)"
       className="ui-label inline-flex items-center gap-2"
     >
       <span className="theme-label theme-label-night" title="Blue hour">
         Night
       </span>
-      <span className="text-ink-faint" aria-hidden="true">
-        /
-      </span>
+      {/* not aria-hidden: keeps the element's visible text "Night / Day" matching
+          the aria-label prefix (WCAG 2.5.3); the button's spoken name is the label */}
+      <span className="text-ink-faint">/</span>
       <span className="theme-label theme-label-day" title="Day station">
         Day
       </span>

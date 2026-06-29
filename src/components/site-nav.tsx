@@ -89,12 +89,12 @@ export function SiteNav({ heroOverlay = false }: { heroOverlay?: boolean }) {
         className="nav-bar fixed inset-x-0 top-0 z-50"
       >
         <div className="frame relative flex h-16 items-center justify-between">
-          <Link href="/" aria-label="horz — home" className="shrink-0">
+          <Link href="/" aria-label="horz.dev, home" className="shrink-0">
             <InlineLockup />
           </Link>
 
           {/* center links (desktop) */}
-          <nav className="absolute left-1/2 hidden -translate-x-1/2 items-stretch gap-1 md:flex">
+          <nav className="absolute left-1/2 hidden -translate-x-1/2 items-stretch gap-1 lg:flex">
             {/* Product → the strata menu */}
             <div ref={productRef} className="relative flex items-stretch">
               <button
@@ -185,7 +185,7 @@ export function SiteNav({ heroOverlay = false }: { heroOverlay?: boolean }) {
           </nav>
 
           {/* right cluster (desktop) */}
-          <div className="hidden items-center gap-2 md:flex">
+          <div className="hidden items-center gap-2 lg:flex">
             <Link
               href={NAV_UTILITY.login.href}
               className="inline-link quiet ui-label mr-2"
@@ -210,7 +210,7 @@ export function SiteNav({ heroOverlay = false }: { heroOverlay?: boolean }) {
             aria-label="Open menu"
             aria-expanded={mobileOpen}
             onClick={() => setMobileOpen(true)}
-            className="grid size-10 place-items-center text-ink md:hidden"
+            className="grid size-10 place-items-center text-ink lg:hidden"
           >
             <MenuGlyph open={mobileOpen} />
           </button>

@@ -15,7 +15,7 @@ export function ContactPage() {
   return (
     <>
       <SiteNav heroOverlay />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <ContactHero />
         <TheBoard />
         <ContactObjections />
@@ -28,7 +28,8 @@ export function ContactPage() {
 }
 
 /* ── objections (verbatim, content/08; outer quotes stripped to match accordion) ─ */
-const OBJECTIONS = [
+// exported so the route can emit it as FAQPage JSON-LD (same Q&A the visitor reads)
+export const OBJECTIONS = [
   {
     q: "'Talk to us' sounds like a sales funnel. I don't want an SDR working me.",
     a: "You won't get one. The Talk-to-us line is answered by a founder, not a queue, and there is no drip sequence behind the form. If self-serve fits, Start building skips the call entirely and the first layer is running the same day.",

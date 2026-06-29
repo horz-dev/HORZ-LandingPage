@@ -130,7 +130,9 @@
 
   --text-primary: #f2efe8;
   --text-secondary: #a4aab5;
-  --text-tertiary: #697079;
+  /* faint instrument labels — nudged from #697079 to clear WCAG AA (~4.5:1 on
+     the page/floor/surface grounds) while staying clearly secondary (§6 a11y). */
+  --text-tertiary: #7e848e;
 
   --flare: #ff6f44;
   --flare-link: #ff855f; /* dark: inline links share the hover tone (§4) */
@@ -170,7 +172,10 @@
 
   --text-primary: #15140f; /* ink — never #000 */
   --text-secondary: #66605a;
-  --text-tertiary: #97928a;
+  /* faint instrument labels — darkened from #97928a (2.56:1, genuinely hard to
+     read on fog) to clear WCAG AA across fog/surface AND the warm floor (§6 a11y).
+     Keeps the warm-taupe hue; still clearly secondary vs the ~14:1 primary ink. */
+  --text-tertiary: #655f56;
 
   --flare: #fb4d1c; /* vermilion — large/CTA/core only */
   --flare-link: #be3613; /* inline links — passes APCA on fog */
@@ -224,6 +229,31 @@
 
   /* focus ring — 2px flare(-hover), 2px offset (§4) */
   :focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  /* skip-to-content (§4 a11y): off-screen until focused, then a real on-brand
+     control in the instrument register. First tab stop on every page. */
+  .skip-link {
+    position: fixed;
+    top: var(--s-8);
+    left: var(--s-8);
+    z-index: 100;
+    transform: translateY(-200%);
+    padding: var(--s-8) var(--s-16);
+    background: var(--surface-raised);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    font-family: var(--mono);
+    font-size: 0.8125rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: transform var(--dur-fast) var(--ease-micro);
+  }
+  .skip-link:focus {
+    transform: translateY(0);
     outline: 2px solid var(--focus-ring);
     outline-offset: 2px;
   }
@@ -659,6 +689,13 @@
   .btn-primary {
     background: var(--flare);
     color: var(--bg);
+  }
+  /* On dark (home), var(--bg) is the near-black ground → dark ink on the flare
+     fill (AA). On light "day station", var(--bg) is the fog → light ink on the
+     flare, which fails contrast; use the dark ink there so both themes read as
+     dark-ink-on-flare and the CTA clears WCAG AA (§6 a11y). */
+  [data-theme="light"] .btn-primary {
+    color: var(--text-primary);
   }
   .btn-primary:hover {
     background: var(--flare-hover);

@@ -111,7 +111,7 @@ export function KitShowcase() {
 
   return (
     <DensityProvider density={density}>
-      <main className="flex-1">
+      <main id="main-content" tabIndex={-1} className="flex-1">
         {/* —— hero —— transparent nav overlays this; the dusk band is the one flare —— */}
         <Container width="content" className="pt-32 pb-16 md:pt-40">
           <Eyebrow as="p" index="P1" className="mb-6">

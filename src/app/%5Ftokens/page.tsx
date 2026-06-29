@@ -177,7 +177,7 @@ function Swatch({ token }: { token: Token }) {
 
 export default function TokensPage() {
   return (
-    <main>
+    <main id="main-content" tabIndex={-1}>
       {/* —— top datum bar —— */}
       <header className="sticky top-0 z-50 border-b border-line bg-bg/80 backdrop-blur-md">
         <div className="frame flex h-16 items-center justify-between">

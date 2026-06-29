@@ -20,7 +20,7 @@ export function PricingPage() {
   return (
     <>
       <SiteNav heroOverlay />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <PricingHero />
         <Tiers />
         <Matrix />
@@ -336,7 +336,8 @@ function AboveScale() {
 }
 
 /* ── questions — the pricing FAQ (verbatim, content/04) ────────────────────── */
-const QUESTIONS = [
+// exported so the route can emit it as FAQPage JSON-LD (same Q&A the visitor reads)
+export const QUESTIONS = [
   {
     q: "How do you price this — per seat, or per resolution?",
     a: "By the function, flat. You pay for the layers a tier runs, not per seat and not per resolved ticket. A support tool that bills per resolved ticket charges you more the more customers you win; a layer you depend on shouldn't. One number, one bill — the whole back office covered.",
