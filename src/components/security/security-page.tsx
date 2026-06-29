@@ -26,7 +26,7 @@ export function SecurityPage() {
   return (
     <>
       <SiteNav heroOverlay />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <SecurityHero />
         <Guarantees />
         <ObjectionsSection />
@@ -117,7 +117,8 @@ const GUARANTEES: Guarantee[] = [
   },
 ];
 
-const OBJECTIONS = [
+// exported so the route can emit it as FAQPage JSON-LD (same Q&A the visitor reads)
+export const OBJECTIONS = [
   {
     q: "If horz goes down or dies, my whole back office fails at once.",
     a: "The whole back office on one young vendor is the right thing to worry about, so the exit is built before you need it. The standing export is a running copy, not a support ticket: it refreshes on every signed or filed artifact and lands in open formats — PDFs for the executed paper, a structured dump (JSON plus CSV) for the graph and the metric definitions, so it imports without us. The regulated work hands off to a named successor: a filed return and its workpapers move to the CPA or firm you choose, a contract and its playbook to your next attorney, because the licensed signer is already on the record. The vendor going away is not your data going away.",

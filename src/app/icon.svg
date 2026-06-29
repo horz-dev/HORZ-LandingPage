@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" role="img" aria-label="horz">
+  <!-- The Section in miniature: breadth (ink strata) pierced once by the founder's
+       vertical core (vermilion flare) at the 5/12 line. Blue-hour ground. -->
+  <rect width="32" height="32" fill="#0D1014"/>
+  <g stroke="#F2EFE8" stroke-width="2.4" stroke-linecap="butt">
+    <line x1="5" y1="8"  x2="27" y2="8"/>
+    <line x1="5" y1="14" x2="19" y2="14"/>
+    <line x1="5" y1="20" x2="23" y2="20"/>
+    <line x1="5" y1="26" x2="15" y2="26"/>
+  </g>
+  <line x1="13" y1="4" x2="13" y2="28" stroke="#FF6F44" stroke-width="2.8" stroke-linecap="butt"/>
+</svg>

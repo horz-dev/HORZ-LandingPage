@@ -1,5 +1,13 @@
+import type { Metadata } from "next";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
+import {
+  pageMetadata,
+  HOME_TITLE,
+  HOME_DESCRIPTION,
+  OG_TITLE,
+  OG_DESCRIPTION,
+} from "@/lib/seo";
 import { Hero } from "@/components/home/hero";
 import { ProofLog } from "@/components/home/proof-log";
 import { Thesis } from "@/components/home/thesis";
@@ -19,11 +27,21 @@ import { ManifestoFloor } from "@/components/home/manifesto-floor";
  * overlays the hero (heroOverlay) so the page's one above-the-fold flare CTA lives
  * in the hero, not the bar. Footer closes the cut.
  */
+// content/02 §5 title/desc for the <title>/<meta>, §6 copy for the social card.
+export const metadata: Metadata = pageMetadata({
+  title: HOME_TITLE,
+  titleAbsolute: true,
+  description: HOME_DESCRIPTION,
+  path: "/",
+  ogTitle: OG_TITLE,
+  ogDescription: OG_DESCRIPTION,
+});
+
 export default function Home() {
   return (
     <>
       <SiteNav heroOverlay />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <Hero />
         <ProofLog />
         <Thesis />

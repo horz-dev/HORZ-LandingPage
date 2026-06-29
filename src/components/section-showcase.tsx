@@ -47,7 +47,7 @@ export function SectionShowcase() {
 
   return (
     <DensityProvider density={density}>
-      <main className="flex-1">
+      <main id="main-content" tabIndex={-1} className="flex-1">
         {/* —— intro —— transparent nav overlays this —— */}
         <Container width="content" className="pt-32 pb-12 md:pt-40">
           <Eyebrow as="p" index="P2" className="mb-6">
