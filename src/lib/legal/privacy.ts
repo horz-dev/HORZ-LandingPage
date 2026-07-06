@@ -1,4 +1,5 @@
 import type { LegalDoc } from "./types";
+import { CONTACT_EMAIL } from "../contact";
 
 /**
  * Privacy Policy — a standard SaaS privacy notice adapted to horz, covering the
@@ -168,6 +169,6 @@ export const PRIVACY: LegalDoc = {
   ],
   contact: {
     line: "To exercise a privacy right, or with any question about this Policy, write to us at",
-    email: "contact@horz.dev",
+    email: CONTACT_EMAIL,
   },
 };

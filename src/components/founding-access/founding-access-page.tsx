@@ -11,6 +11,7 @@ import {
 } from "@/components/ui";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
+import { CONTACT_EMAIL } from "@/lib/contact";
 
 /**
  * /founding-access — the pre-launch lead capture that replaces the retired
@@ -22,12 +23,11 @@ import { SiteFooter } from "@/components/site-footer";
  * band, a numbered strata of what the cohort gets, three honest steps, the mail
  * stated plainly, and the warm floor where the page core terminates in one flare
  * tick (the established floor pattern; no risky mid-page core to collide with).
- * The one request action is a mailto to contact@horz.dev — no backend, no form,
+ * The one request action is a mailto to the shared inbox (lib/contact.ts,
+ * temporarily one working address until the horz.dev provider lands) — no form,
  * exactly "ping us, our team reaches out." The mail line also carries the direct
  * channel: book a call, the Cal.com popup (CalLink).
  */
-
-const CONTACT_EMAIL = "contact@horz.dev";
 
 /** the request action — a pre-addressed mail with a light prompt, no form/backend */
 const REQUEST_MAILTO =

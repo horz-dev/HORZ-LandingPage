@@ -1,4 +1,5 @@
 import type { LegalDoc } from "./types";
+import { CONTACT_EMAIL } from "../contact";
 
 /**
  * Cookie Policy — a standard cookie notice adapted to horz. Pre-launch template;
@@ -78,6 +79,6 @@ export const COOKIES: LegalDoc = {
   ],
   contact: {
     line: "Questions about cookies? Write to us at",
-    email: "contact@horz.dev",
+    email: CONTACT_EMAIL,
   },
 };

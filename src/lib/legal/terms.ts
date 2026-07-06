@@ -1,4 +1,5 @@
 import type { LegalDoc } from "./types";
+import { CONTACT_EMAIL } from "../contact";
 
 /**
  * Terms of Service — a standard SaaS agreement adapted to horz, structured along
@@ -167,6 +168,6 @@ export const TERMS: LegalDoc = {
   ],
   contact: {
     line: "Questions about these Terms? Write to us at",
-    email: "contact@horz.dev",
+    email: CONTACT_EMAIL,
   },
 };

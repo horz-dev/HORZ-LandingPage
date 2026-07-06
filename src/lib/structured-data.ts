@@ -10,6 +10,7 @@
  */
 
 import { SITE_NAME, SITE_URL, POSITIONING_ONE_LINER, TAGLINE } from "./seo";
+import { CONTACT_EMAIL } from "./contact";
 
 const ORG_ID = `${SITE_URL}/#organization`;
 const SITE_ID = `${SITE_URL}/#website`;
@@ -29,17 +30,17 @@ export function organizationLd(): Json {
     description:
       "horz is the modular backend for everything around your business — the six functions every company runs (customer service, legal, HR, marketing, analytics, and tax) delivered as managed layers on one shared company brain, so the founder keeps only their core product.",
     slogan: TAGLINE,
-    email: "talk@horz.dev",
+    email: CONTACT_EMAIL,
     contactPoint: [
       {
         "@type": "ContactPoint",
         contactType: "sales",
-        email: "talk@horz.dev",
+        email: CONTACT_EMAIL,
       },
       {
         "@type": "ContactPoint",
         contactType: "customer support",
-        email: "support@horz.dev",
+        email: CONTACT_EMAIL,
       },
     ],
     knowsAbout: [
