@@ -2,7 +2,7 @@
 
 import { useRef, type ReactNode } from "react";
 import { motion, useInView, useReducedMotion, type Variants } from "framer-motion";
-import { Container, Datum, Eyebrow, FlareLink } from "@/components/ui";
+import { CalLink, Container, Datum, Eyebrow, FlareLink } from "@/components/ui";
 import { Blueprint } from "@/components/function-page/blueprint";
 import { ease } from "@/lib/motion";
 
@@ -20,8 +20,9 @@ const LINE = ease.line as unknown as Bezier;
  * between the line's index/name (left of the 5/12 line) and its copy (right of it),
  * so it never crosses text. On mobile the board stacks and the core is hidden.
  *
- * Role addresses ship as live mailto: links (founder call, Phase 5b); response-time
- * targets, the booking slot, the brand-kit URL, and /careers stay [PLACEHOLDER].
+ * Role addresses ship as live mailto: links (founder call, Phase 5b); the booking
+ * slot is live Cal.com (click-popup via CalLink); response-time targets, the
+ * brand-kit URL, and /careers stay [PLACEHOLDER].
  */
 
 /* ── a line on the board ───────────────────────────────────────────────────── */
@@ -262,9 +263,8 @@ export function TheBoard() {
                 <FlareLink href="mailto:talk@horz.dev" quiet className="font-mono">
                   talk@horz.dev
                 </FlareLink>
-                , or book a slot{" "}
-                <span className="font-mono text-ink-faint">[PLACEHOLDER]</span>. Not an
-                SDR, not a drip sequence.
+                , or <CalLink quiet>book a slot</CalLink>. Not an SDR, not a drip
+                sequence.
               </>
             }
             response={
@@ -280,9 +280,12 @@ export function TheBoard() {
             standalone="Hand back the whole back office, at any size."
             stamp={<StaffedStamp />}
             cta={
-              <FlareLink href="mailto:talk@horz.dev" className="index uppercase">
-                Talk to us →
-              </FlareLink>
+              <>
+                <FlareLink href="mailto:talk@horz.dev" className="index uppercase">
+                  Talk to us →
+                </FlareLink>
+                <CalLink className="index uppercase">Book a call →</CalLink>
+              </>
             }
           >
             <BoardCore />

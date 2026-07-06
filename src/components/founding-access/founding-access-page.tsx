@@ -1,4 +1,14 @@
-import { Container, CTA, Datum, DuskBand, Eyebrow, FlareLink, Reveal, Section } from "@/components/ui";
+import {
+  CalLink,
+  Container,
+  CTA,
+  Datum,
+  DuskBand,
+  Eyebrow,
+  FlareLink,
+  Reveal,
+  Section,
+} from "@/components/ui";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 
@@ -13,7 +23,8 @@ import { SiteFooter } from "@/components/site-footer";
  * stated plainly, and the warm floor where the page core terminates in one flare
  * tick (the established floor pattern; no risky mid-page core to collide with).
  * The one request action is a mailto to contact@horz.dev — no backend, no form,
- * exactly "ping us, our team reaches out."
+ * exactly "ping us, our team reaches out." The mail line also carries the direct
+ * channel: book a call, the Cal.com popup (CalLink).
  */
 
 const CONTACT_EMAIL = "contact@horz.dev";
@@ -182,6 +193,8 @@ function HowItWorks() {
           <FlareLink href={REQUEST_MAILTO} className="font-mono text-ink">
             {CONTACT_EMAIL}
           </FlareLink>
+          <span className="body-sm text-ink-muted">— or</span>
+          <CalLink className="body-sm">book a call</CalLink>
         </div>
       </Reveal>
     </Section>
