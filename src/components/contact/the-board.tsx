@@ -3,6 +3,7 @@
 import { useRef, type ReactNode } from "react";
 import { motion, useInView, useReducedMotion, type Variants } from "framer-motion";
 import { CalLink, Container, Datum, Eyebrow, FlareLink } from "@/components/ui";
+import { CONTACT_EMAIL, mailtoHref } from "@/lib/contact";
 import { Blueprint } from "@/components/function-page/blueprint";
 import { ease } from "@/lib/motion";
 
@@ -20,9 +21,11 @@ const LINE = ease.line as unknown as Bezier;
  * between the line's index/name (left of the 5/12 line) and its copy (right of it),
  * so it never crosses text. On mobile the board stacks and the core is hidden.
  *
- * Role addresses ship as live mailto: links (founder call, Phase 5b); the booking
- * slot is live Cal.com (click-popup via CalLink); response-time targets, the
- * brand-kit URL, and /careers stay [PLACEHOLDER].
+ * Every line's mailto is temporarily the one working inbox (CONTACT_EMAIL,
+ * subject-tagged per channel — see lib/contact.ts) until the horz.dev mail
+ * provider is provisioned; the booking slot is live Cal.com (click-popup via
+ * CalLink); response-time targets, the brand-kit URL, and /careers stay
+ * [PLACEHOLDER].
  */
 
 /* ── a line on the board ───────────────────────────────────────────────────── */
@@ -237,8 +240,8 @@ export function TheBoard() {
             channel={
               <>
                 request access and we onboard you by hand.{" "}
-                <FlareLink href="mailto:contact@horz.dev" quiet className="font-mono">
-                  contact@horz.dev
+                <FlareLink href={mailtoHref("Founding access request")} quiet className="font-mono">
+                  {CONTACT_EMAIL}
                 </FlareLink>
                 .
               </>
@@ -260,8 +263,8 @@ export function TheBoard() {
             channel={
               <>
                 a founder, by call or thread.{" "}
-                <FlareLink href="mailto:talk@horz.dev" quiet className="font-mono">
-                  talk@horz.dev
+                <FlareLink href={mailtoHref("Talk to us")} quiet className="font-mono">
+                  {CONTACT_EMAIL}
                 </FlareLink>
                 , or <CalLink quiet>book a slot</CalLink>. Not an SDR, not a drip
                 sequence.
@@ -281,7 +284,7 @@ export function TheBoard() {
             stamp={<StaffedStamp />}
             cta={
               <>
-                <FlareLink href="mailto:talk@horz.dev" className="index uppercase">
+                <FlareLink href={mailtoHref("Talk to us")} className="index uppercase">
                   Talk to us →
                 </FlareLink>
                 <CalLink className="index uppercase">Book a call →</CalLink>
@@ -300,8 +303,8 @@ export function TheBoard() {
             who="security, legal, and procurement running a vendor review before a pilot can start."
             channel={
               <>
-                <FlareLink href="mailto:security@horz.dev" quiet className="font-mono">
-                  security@horz.dev
+                <FlareLink href={mailtoHref("Security & trust")} quiet className="font-mono">
+                  {CONTACT_EMAIL}
                 </FlareLink>
                 . The desk and the controls live at{" "}
                 <FlareLink href="/security" quiet className="font-mono">
@@ -332,8 +335,8 @@ export function TheBoard() {
             channel={
               <>
                 in-app, or{" "}
-                <FlareLink href="mailto:support@horz.dev" quiet className="font-mono">
-                  support@horz.dev
+                <FlareLink href={mailtoHref("Support")} quiet className="font-mono">
+                  {CONTACT_EMAIL}
                 </FlareLink>
                 . Live state on the public board:{" "}
                 <span className="font-mono text-ink">status.horz.dev</span>.
@@ -361,8 +364,8 @@ export function TheBoard() {
             who="media and analysts."
             channel={
               <>
-                <FlareLink href="mailto:media@horz.dev" quiet className="font-mono">
-                  media@horz.dev
+                <FlareLink href={mailtoHref("Press")} quiet className="font-mono">
+                  {CONTACT_EMAIL}
                 </FlareLink>
                 . The brand kit lives at{" "}
                 <span className="font-mono text-ink-faint">[PLACEHOLDER]</span>.
@@ -373,7 +376,7 @@ export function TheBoard() {
             stamp={<PressCard />}
             cta={
               <>
-                <FlareLink href="mailto:media@horz.dev" className="index uppercase">
+                <FlareLink href={mailtoHref("Press")} className="index uppercase">
                   Email press →
                 </FlareLink>
                 <span className="index text-ink-faint">Get kit · [PLACEHOLDER]</span>
@@ -386,8 +389,8 @@ export function TheBoard() {
             who="people who want to build the thing that lets a company stay small."
             channel={
               <>
-                <FlareLink href="mailto:careers@horz.dev" quiet className="font-mono">
-                  careers@horz.dev
+                <FlareLink href={mailtoHref("Careers")} quiet className="font-mono">
+                  {CONTACT_EMAIL}
                 </FlareLink>
                 . Open roles at{" "}
                 <span className="font-mono text-ink">/careers</span>{" "}

@@ -10,6 +10,7 @@ import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { Objections } from "@/components/function-page/objections";
 import { SecurityHero } from "./security-hero";
+import { CONTACT_EMAIL, mailtoHref } from "@/lib/contact";
 
 /**
  * /security — Security & Trust (content/03). The cut that runs *under* the rack,
@@ -362,8 +363,8 @@ function Floor() {
             <p className="body mt-3 text-ink-muted">
               Request the SOC 2 Type II report, the GDPR Article 28 DPA, or the
               current sub-processor list at{" "}
-              <FlareLink href="mailto:security@horz.dev" quiet className="font-mono">
-                security@horz.dev
+              <FlareLink href={mailtoHref("Security & trust")} quiet className="font-mono">
+                {CONTACT_EMAIL}
               </FlareLink>
               . Report a vulnerability to the same address; we acknowledge within{" "}
               <span className="font-mono text-ink-faint">[PLACEHOLDER — target]</span>{" "}

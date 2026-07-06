@@ -4,6 +4,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { Objections } from "@/components/function-page/objections";
 import { ContactHero } from "./contact-hero";
 import { TheBoard } from "./the-board";
+import { mailtoHref } from "@/lib/contact";
 
 /**
  * /contact — content/08. The station directory drawn as a switchboard. The hero
@@ -154,7 +155,7 @@ function Floor() {
             <CTA href="/founding-access" variant="primary" size="lg">
               Request founding access.
             </CTA>
-            <CTA href="mailto:talk@horz.dev" variant="secondary" size="lg">
+            <CTA href={mailtoHref("Talk to us")} variant="secondary" size="lg">
               Talk to us.
             </CTA>
           </div>
