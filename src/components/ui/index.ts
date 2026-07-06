@@ -5,6 +5,7 @@ export { Section } from "./section";
 export { Eyebrow } from "./eyebrow";
 export { CTA } from "./button";
 export { FlareLink } from "./flare-link";
+export { CalLink } from "./cal-link";
 export { StatusDot } from "./status-dot";
 export { Datum } from "./datum";
 export { DuskBand } from "./dusk-band";

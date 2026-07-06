@@ -1,4 +1,4 @@
-import { Container, CTA, Datum, Eyebrow, FlareLink, Reveal } from "@/components/ui";
+import { CalLink, Container, CTA, Datum, Eyebrow, FlareLink, Reveal } from "@/components/ui";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { Objections } from "@/components/function-page/objections";
@@ -15,6 +15,8 @@ import { PricingHero } from "./pricing-hero";
  * (never "coming soon"), and one conversion motion everywhere, Talk to us → /contact
  * (a founder, not a queue), so no lead is lost. Real dollar figures stay
  * [PLACEHOLDER] until set with the first customers. Copy verbatim from content/04.
+ * The conversation motion now carries a second, direct channel: Book a call →
+ * opens the Cal.com popup (CalLink) beside every Talk to us.
  */
 export function PricingPage() {
   return (
@@ -150,9 +152,12 @@ function Tiers() {
                   <div className="flex flex-col gap-3 md:items-end">
                     <LayerMeter filled={t.filled} />
                     <p className="caption text-ink-faint md:text-right">{PRICE_SLOT}</p>
-                    <FlareLink href="/contact" className="index uppercase">
-                      Talk to us →
-                    </FlareLink>
+                    <div className="flex flex-wrap items-baseline gap-x-6 gap-y-2 md:justify-end">
+                      <FlareLink href="/contact" className="index uppercase">
+                        Talk to us →
+                      </FlareLink>
+                      <CalLink className="index uppercase">Book a call →</CalLink>
+                    </div>
                   </div>
                 </div>
 
@@ -296,10 +301,11 @@ function FoundingPricing() {
           numbers.
         </Reveal>
         <Reveal delay={0.14}>
-          <div className="mt-8">
+          <div className="mt-8 flex flex-wrap items-baseline gap-x-6 gap-y-2">
             <FlareLink href="/contact" className="ui-label">
               Talk to us →
             </FlareLink>
+            <CalLink className="ui-label">Book a call →</CalLink>
           </div>
         </Reveal>
       </Container>
@@ -324,10 +330,11 @@ function AboveScale() {
           drawn to fit. A founder answers, not a queue.
         </Reveal>
         <Reveal delay={0.1}>
-          <div className="mt-8">
+          <div className="mt-8 flex flex-wrap items-baseline gap-x-6 gap-y-2">
             <FlareLink href="/contact" className="ui-label">
               Talk to us →
             </FlareLink>
+            <CalLink className="ui-label">Book a call →</CalLink>
           </div>
         </Reveal>
       </Container>
